@@ -2,9 +2,11 @@ package com.prs.web;
 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.prs.business.user.User;
 import com.prs.business.user.UserRepository;
-
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
@@ -113,9 +115,18 @@ public class UserController {
 		return saveUser(u);
 	}
 
-	@PutMapping("/{id}")
-	public JsonResponse updateUser(@RequestBody User u, @PathVariable int id) {
-		return saveUser(u);
+	@PutMapping("/")
+	public JsonResponse updateUser(@RequestBody User u) {
+		JsonResponse jr= null;
+		try {
+			if(userRepo.findById(u.getId()).isPresent())
+				jr=saveUser(u);
+			else
+				jr= JsonResponse.getInstance("User not found.");
+	}catch (Exception e) {
+		jr =JsonResponse.getInstance(e);
+	}
+		return jr;
 	}
 
 	private JsonResponse saveUser(User u) {

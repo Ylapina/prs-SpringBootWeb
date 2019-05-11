@@ -9,4 +9,5 @@ import com.prs.business.purchaseRequest.PurchaseRequest;
 public interface PurchaseRequestLineItemRepository
 		extends PagingAndSortingRepository<PurchaseRequestLineItem, Integer> {
 	List<PurchaseRequestLineItem> findByPurchaseRequest(PurchaseRequest pr);
+	List<PurchaseRequestLineItem> findAllByPurchaseRequestId(int purchaseRequestId);
 }

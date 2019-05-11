@@ -67,11 +67,11 @@ public class Product {
 		this.vendor = vendor;
 	}
 
-	public String getVendorPartNumber() {
+	public String getPartNumber() {
 		return partNumber;
 	}
 
-	public void setVendorPartNumber(String vendorPartNumber) {
+	public void setPartNumber(String vendorPartNumber) {
 		this.partNumber = vendorPartNumber;
 	}
 
@@ -109,7 +109,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", vendorId=" + vendor + ", vendorPartNumber=" + partNumber + ", name=" + name
+		return "Product [id=" + id + ", vendorId=" + vendor + ", partNumber=" + partNumber + ", name=" + name
 				+ ", price=" + price + ", unit=" + unit + ", photoPass=" + photoPass + "]";
 	}
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.prs.business.purchaseRequest.PurchaseRequest;
 import com.prs.business.purchaseRequest.PurchaseRequestRepository;
-
+import com.prs.business.purchaseRequestLineItem.PurchaseRequestLineItemRepository;
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/purchase-requests")
 
@@ -31,7 +33,8 @@ public class PurchaseRequestController {
 
 	@Autowired
 	PurchaseRequestRepository purchaseRequestRepo;
-
+	@Autowired
+	PurchaseRequestLineItemRepository purchaseRequestLineItemRepo;
 	@GetMapping("/")
 	public JsonResponse getAll() {
 		JsonResponse jr = null;
@@ -81,8 +84,8 @@ public class PurchaseRequestController {
 		return jr;
 	}
 
-	@PutMapping("/{id}")
-	public JsonResponse updatePurchaseRequest(@RequestBody PurchaseRequest pr, @PathVariable int id) {
+	@PutMapping("/")
+	public JsonResponse updatePurchaseRequest(@RequestBody PurchaseRequest pr) {
 		JsonResponse jr= savePurchaseRequest(pr);
 		return jr;
 	}
@@ -135,7 +138,7 @@ public class PurchaseRequestController {
 			pr.setStatus(APPROVED);
 			pr.setSubmittedDate(currentDateTime);
 		} else {
-			pr.setStatus(REJECTED);
+			pr.setStatus(REVIEW);
 			pr.setSubmittedDate(currentDateTime);
 		}
 		return savePurchaseRequest(pr);
@@ -154,5 +157,5 @@ public class PurchaseRequestController {
 		return savePurchaseRequest(pr);
 
 	}
-
+	
 }
